@@ -183,23 +183,18 @@ export default function Home() {
     <div className="min-h-screen bg-slate-50 text-slate-800">
       <div className="max-w-4xl mx-auto px-4 py-10">
         <header className="mb-8">
-          <div className="flex items-center gap-3">
-            <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-indigo-600 text-white text-sm font-bold">
-              SC
-            </span>
-            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
-              Structured Clinical Content Extraction
-            </h1>
-          </div>
-          <p className="text-sm text-slate-500 mt-2 max-w-2xl pl-12">
+          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
+            Structured Clinical Content Extraction
+          </h1>
+          <p className="text-sm text-slate-500 mt-2 max-w-2xl">
             Proof of concept for automated topic discovery, structured HTML extraction,
             Markdown conversion, metadata capture, and change detection.
           </p>
-          <p className="text-xs text-slate-400 mt-3 pl-12">
+          <p className="text-xs text-slate-400 mt-3">
             <span className="font-medium text-slate-500">Demo source:</span> Publicly
             accessible medical content.
           </p>
-          <div className="flex flex-wrap items-center gap-1.5 mt-3 pl-12">
+          <div className="flex flex-wrap items-center gap-1.5 mt-3">
             {["Discover", "Extract", "Clean", "Convert", "Track"].map((step, i, arr) => (
               <span key={step} className="flex items-center gap-1.5">
                 <span className="text-xs font-medium text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-full px-2.5 py-1">
@@ -209,6 +204,14 @@ export default function Home() {
               </span>
             ))}
           </div>
+          <a
+            href="https://jeremybuilds.online"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-block text-xs text-indigo-600 hover:text-indigo-700 hover:underline mt-4"
+          >
+            jeremybuilds.online
+          </a>
         </header>
 
         <details className="mb-6 border border-slate-200 rounded-lg bg-white shadow-sm group">
