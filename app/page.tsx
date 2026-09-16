@@ -183,16 +183,51 @@ export default function Home() {
     <div className="min-h-screen bg-slate-50 text-slate-800">
       <div className="max-w-4xl mx-auto px-4 py-10">
         <header className="mb-8">
-          <h1 className="text-2xl font-bold text-slate-900">Clinical Content Extractor</h1>
-          <p className="text-sm text-slate-500 mt-1">
-            Structured extraction proof of concept — topic discovery, category mapping,
-            HTML→Markdown conversion with heading/list/table preservation, metadata, and
-            change detection. Demonstrated here against Wikipedia medical articles as a
-            public, permissively-licensed stand-in for a client&apos;s content library.
+          <div className="flex items-center gap-3">
+            <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-indigo-600 text-white text-sm font-bold">
+              SC
+            </span>
+            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
+              Structured Clinical Content Extraction
+            </h1>
+          </div>
+          <p className="text-sm text-slate-500 mt-2 max-w-2xl pl-12">
+            Proof of concept for automated topic discovery, structured HTML extraction,
+            Markdown conversion, metadata capture, and change detection.
           </p>
+          <p className="text-xs text-slate-400 mt-3 pl-12">
+            <span className="font-medium text-slate-500">Demo source:</span> Publicly
+            accessible medical content.
+          </p>
+          <div className="flex flex-wrap items-center gap-1.5 mt-3 pl-12">
+            {["Discover", "Extract", "Clean", "Convert", "Track"].map((step, i, arr) => (
+              <span key={step} className="flex items-center gap-1.5">
+                <span className="text-xs font-medium text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-full px-2.5 py-1">
+                  {step}
+                </span>
+                {i < arr.length - 1 && <span className="text-slate-300">→</span>}
+              </span>
+            ))}
+          </div>
         </header>
 
-        <div className="border border-slate-200 rounded-lg bg-white p-4 mb-6">
+        <details className="mb-6 border border-slate-200 rounded-lg bg-white shadow-sm group">
+          <summary className="cursor-pointer select-none px-4 py-2.5 text-xs font-medium text-slate-500 flex items-center justify-between">
+            Demo notes — what this is and isn&apos;t
+            <span className="text-slate-400 group-open:rotate-180 transition-transform">⌄</span>
+          </summary>
+          <div className="px-4 pb-3 text-xs text-slate-500 border-t border-slate-100 pt-2.5 leading-relaxed">
+            This runs against public Wikipedia medical articles, not any specific
+            client&apos;s private content library — it demonstrates the extraction
+            architecture (structure-preserving extraction, cleaning, Markdown conversion,
+            metadata capture, hash-based change tracking), not a recreation of any
+            particular target site. Pointing it at a different source is a matter of
+            swapping the discovery and content-selector logic; cleaning, conversion,
+            metadata, and change detection carry over as-is.
+          </div>
+        </details>
+
+        <div className="border border-slate-200 rounded-lg bg-white shadow-sm p-4 mb-6">
           <label className="block text-xs font-medium text-slate-500 uppercase tracking-wide mb-1">
             Source categories (comma-separated)
           </label>
@@ -219,8 +254,14 @@ export default function Home() {
           </div>
         )}
 
+        {topics.length === 0 && !discovering && !error && (
+          <div className="border border-dashed border-slate-300 rounded-lg text-center px-4 py-8 mb-6 text-sm text-slate-400">
+            Click &ldquo;Discover Topics&rdquo; to pull real topics from the categories above.
+          </div>
+        )}
+
         {topics.length > 0 && (
-          <div className="border border-slate-200 rounded-lg bg-white p-4 mb-6">
+          <div className="border border-slate-200 rounded-lg bg-white shadow-sm p-4 mb-6">
             <div className="flex items-center justify-between mb-3">
               <p className="text-sm text-slate-600">
                 Discovered: <span className="font-semibold text-slate-800">{topics.length}</span>{" "}
@@ -253,9 +294,15 @@ export default function Home() {
                     <td className="py-2 text-slate-800">{t.title}</td>
                     <td className="py-2 text-slate-500">{t.category}</td>
                     <td className="py-2">
-                      {t.status === "pending" && <span className="text-slate-400">pending</span>}
-                      {t.status === "success" && <span className="text-emerald-600 font-medium">✓</span>}
-                      {t.status === "failed" && <span className="text-rose-600 font-medium">✕</span>}
+                      {t.status === "pending" && (
+                        <span className="text-xs text-slate-500 bg-slate-100 rounded-full px-2 py-0.5">pending</span>
+                      )}
+                      {t.status === "success" && (
+                        <span className="text-xs text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-2 py-0.5">✓ extracted</span>
+                      )}
+                      {t.status === "failed" && (
+                        <span className="text-xs text-rose-700 bg-rose-50 border border-rose-100 rounded-full px-2 py-0.5">✕ failed</span>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -265,7 +312,7 @@ export default function Home() {
         )}
 
         {selectedResult && (
-          <div className="border border-slate-200 rounded-lg bg-white overflow-hidden mb-6">
+          <div className="border border-slate-200 rounded-lg bg-white shadow-sm overflow-hidden mb-6">
             <div className="px-4 py-3 border-b border-slate-100">
               <h2 className="font-semibold text-slate-800">Extraction Preview</h2>
               <p className="text-xs text-slate-500 mt-0.5">
@@ -315,7 +362,7 @@ export default function Home() {
         )}
 
         {allExtracted && (
-          <div className="border border-slate-200 rounded-lg bg-white p-4 mb-6">
+          <div className="border border-slate-200 rounded-lg bg-white shadow-sm p-4 mb-6">
             <h2 className="font-semibold text-slate-800 mb-2">Extraction Report</h2>
             <p className="text-sm text-slate-600">
               {topics.length} topics discovered &nbsp;·&nbsp;{" "}
@@ -364,7 +411,7 @@ export default function Home() {
         )}
 
         {updateReport && (
-          <div className="border border-slate-200 rounded-lg bg-white p-4">
+          <div className="border border-slate-200 rounded-lg bg-white shadow-sm p-4">
             <h2 className="font-semibold text-slate-800 mb-2">Update Report</h2>
             <p className="text-sm text-slate-600">
               <span className="text-slate-500">✓ {updateReport.unchanged} unchanged</span>

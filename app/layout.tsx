@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Clinical Content Extractor",
-  description: "Structured extraction proof of concept: topic discovery, category mapping, HTML-to-Markdown, and change detection.",
+  title: "Structured Clinical Content Extraction",
+  description: "Proof of concept for automated topic discovery, structured HTML extraction, Markdown conversion, metadata capture, and change detection.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
